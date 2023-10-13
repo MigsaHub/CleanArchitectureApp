@@ -8,9 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["CleanArchitectureApp/CleanArchitectureApp.csproj", "CleanArchitectureApp/"]
-COPY ["CleanArchitectureApp.Application/CleanArchitectureApp.Application.csproj", "CleanArchitectureApp.Application/"]
-COPY ["CleanArchitectureApp.Infrastructure/CleanArchitectureApp.Infrastructure.csproj", "CleanArchitectureApp.Infrastructure/"]
-COPY ["CleanArchitectureApp.Domain/CleanArchitectureApp.Domain.csproj", "CleanArchitectureApp.Domain/"]
 RUN dotnet restore "CleanArchitectureApp/CleanArchitectureApp.csproj"
 COPY . .
 WORKDIR "/src/CleanArchitectureApp"
