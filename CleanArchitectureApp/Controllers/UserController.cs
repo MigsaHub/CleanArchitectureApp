@@ -1,12 +1,14 @@
 ﻿using CleanArchitectureApp.Application.DTO;
 using CleanArchitectureApp.Application.Exceptions;
-using CleanArchitectureApp.Application.Services; 
+using CleanArchitectureApp.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitectureApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -15,7 +17,7 @@ namespace CleanArchitectureApp.Controllers
         {
            _userService = userService;
         }
-
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<ActionResult<bool>> Register(UserDto userDto)
         { 
@@ -45,7 +47,7 @@ namespace CleanArchitectureApp.Controllers
             }
 
         }
-
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(UserDto userDto)
         {
