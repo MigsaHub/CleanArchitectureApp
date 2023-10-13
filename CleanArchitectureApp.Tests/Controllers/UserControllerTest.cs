@@ -14,7 +14,7 @@ namespace CleanArchitectureApp.Tests.Controllers
         public async Task RegisterUser_ThrowsException()
         {
             //Arrange
-            IUserServiceRepository userServiceRepository = new MockUserRepositoryFail();
+            IUserRepository userRepository = new MockUserRepositoryFail();
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserProfile());
@@ -22,7 +22,7 @@ namespace CleanArchitectureApp.Tests.Controllers
 
             IMapper mapper = new Mapper(mapperConfig);
             var userDto = new UserDto();
-            var service = new UserService(userServiceRepository, mapper);
+            var service = new UserService(userRepository, mapper);
 
             //Assert 
             await Assert.ThrowsAnyAsync<UserServiceException>(async () => await service.Register(userDto));
@@ -30,7 +30,7 @@ namespace CleanArchitectureApp.Tests.Controllers
         [Fact]
         public async void RegisterUser_WhenRequestIsOk_Successfull()
         {   //Arrange
-            IUserServiceRepository userServiceRepository = new MockUserRepository();
+            IUserRepository userRepository = new MockUserRepository();
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new UserProfile());
@@ -38,7 +38,7 @@ namespace CleanArchitectureApp.Tests.Controllers
 
             IMapper mapper = new Mapper(mapperConfig);
             var userDto = new UserDto();
-            var service = new UserService(userServiceRepository, mapper);
+            var service = new UserService(userRepository, mapper);
             //Act
             var result = await service.Register(userDto);
             //Assert 

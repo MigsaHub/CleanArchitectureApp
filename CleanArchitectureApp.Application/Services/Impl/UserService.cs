@@ -8,11 +8,11 @@ namespace CleanArchitectureApp.Application.Services.Impl
 {
     public class UserService : IUserService
     {
-        private readonly IUserServiceRepository _userServiceRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
-        public UserService(IUserServiceRepository userServiceRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IMapper mapper)
         {
-            _userServiceRepository = userServiceRepository;
+            _userRepository = userRepository;
             _mapper = mapper;
         }
 
@@ -21,12 +21,12 @@ namespace CleanArchitectureApp.Application.Services.Impl
             try
             {
                 var user = _mapper.Map<User>(userDto);
-                var result = await _userServiceRepository.AddUser(user);
+                var result = await _userRepository.AddUser(user);
                 return result;
             }
             catch (Exception ex)
             {
-                throw new UserServiceException(ex);
+                throw new UserServiceException(ex.Message,ex.InnerException);
             }
         }
     }
