@@ -1,4 +1,12 @@
-﻿namespace CleanArchitectureApp.Tests.Controllers
+﻿using AutoMapper;
+using CleanArchitectureApp.Application.DTO;
+using CleanArchitectureApp.Application.Exceptions;
+using CleanArchitectureApp.Application.Mappers;
+using CleanArchitectureApp.Application.Services.Impl;
+using CleanArchitectureApp.Infrastructure.Repository;
+using CleanArchitectureApp.Tests.MockRepositories;
+
+namespace CleanArchitectureApp.Tests.Controllers
 {
     public class UserControllerTest
     {
@@ -6,15 +14,36 @@
         public async Task RegisterUser_ThrowsException()
         {
             //Arrange
-            IUserServiceRepository userServiceRepository = new MockUserRepository();
+            IUserServiceRepository userServiceRepository = new MockUserRepositoryFail();
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new UserProfile());
+            });
 
+            IMapper mapper = new Mapper(mapperConfig);
             var userDto = new UserDto();
-            var service = new UserService(userServiceRepository);
-            //Act
+            var service = new UserService(userServiceRepository, mapper);
+
             //Assert 
             await Assert.ThrowsAnyAsync<UserServiceException>(async () => await service.Register(userDto));
         }
+        [Fact]
+        public async void RegisterUser_WhenRequestIsOk_Successfull()
+        {   //Arrange
+            IUserServiceRepository userServiceRepository = new MockUserRepository();
+            var mapperConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new UserProfile());
+            });
 
+            IMapper mapper = new Mapper(mapperConfig);
+            var userDto = new UserDto();
+            var service = new UserService(userServiceRepository, mapper);
+            //Act
+            var result = await service.Register(userDto);
+            //Assert 
+             Assert.True(result);
+        }
 
         [Fact]
         public void LoginUser_WhenRequestIsOk_Successfull()
@@ -35,45 +64,5 @@
         }
  
     }
-    public class MockUserRepository : IUserServiceRepository
-    {
-        public Task<bool> AddUser(UserDto userDto)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public interface IUserServiceRepository
-    {
-        public Task<bool> AddUser(UserDto userDto);
-    }
-
-    public class UserServiceException : Exception
-    {
-    }
-
-    public class UserService
-    {  
-        private readonly IUserServiceRepository _userServiceRepository;
-        public UserService(IUserServiceRepository? userServiceRepository)
-        {
-            _userServiceRepository = userServiceRepository;
-        }
-
-        public async Task<bool> Register(UserDto userDto)
-        {
-           var result= await _userServiceRepository.AddUser(userDto);
-           return result;
-        }
-    }
-
-    public class UserDto
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-
-        public UserDto() { }
-    }
+     
 }

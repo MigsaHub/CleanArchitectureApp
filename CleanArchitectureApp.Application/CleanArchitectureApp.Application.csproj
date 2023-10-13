@@ -7,10 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Exceptions\" />
-    <Folder Include="DTO\" />
-    <Folder Include="Mappers\" />
-    <Folder Include="Services\Impl\" />
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CleanArchitectureApp.Infrastructure\CleanArchitectureApp.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
