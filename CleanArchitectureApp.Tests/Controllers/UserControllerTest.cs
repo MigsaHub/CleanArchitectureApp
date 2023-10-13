@@ -31,9 +31,10 @@ namespace CleanArchitectureApp.Tests.Controllers
         {   //Arrange
             IUserRepository userRepository = new MockUserRepository();
 
-            var userDto = new UserDto(); 
+            var userDto = new Mock<UserDto>();
+            var service = new UserService(userRepository, _mapper);
             //Act
-            var result = await _userServiceMock.Object.Register(userDto);
+            var result = await service.Register(userDto.Object);
             //Assert 
             Assert.True(result);
         }
@@ -44,32 +45,71 @@ namespace CleanArchitectureApp.Tests.Controllers
             //Arrange
             IUserRepository userRepository = new MockUserRepositoryFail();
 
-            var userDto = new UserDto();
+            var userDto = new Mock<UserDto>();
             var service = new UserService(userRepository, _mapper);
 
             //Assert 
-            await Assert.ThrowsAnyAsync<UserServiceException>(async () => await service.Register(userDto));
-        }
-       
-
-        [Fact]
-        public void LoginUser_WhenRequestIsOk_Successfull()
-        {
-
+            await Assert.ThrowsAnyAsync<UserServiceException>(async () => await service.Register(userDto.Object));
         }
 
         [Fact]
-        public void UpdateUser_WhenRequestIsOk_Successfull()
-        {
+        public async Task LoginUser_WhenRequestIsOk_Successfull()
+        {   //Arrange
+            IUserRepository userRepository = new MockUserRepository();
 
+            var userDto = new Mock<UserDto>();
+            var service = new UserService(userRepository, _mapper);
+            //Act
+
+            var result = await service.Login(userDto.Object);
+            //Assert
+            Assert.IsType<string>(result);
         }
 
         [Fact]
-        public void DeleteUser_WhenRequestIsOk_Successfull()
-        {
+        public async Task GetUser_WhenRequestIsOk_Successfull()
+        {   //Arrange
+            IUserRepository userRepository = new MockUserRepository();
 
+            var userDto = new Mock<UserDto>();
+            var service = new UserService(userRepository, _mapper);
+            //Act
+
+            var result = await service.GetUser(userDto.Object.Id);
+            //Assert
+            Assert.IsType<UserDto>(result);
         }
- 
+
+        [Fact]
+        public async Task UpdateUser_WhenRequestIsOk_Successfull()
+        {
+            //Arrange
+            IUserRepository userRepository = new MockUserRepository();
+
+            var userDto = new Mock<UserDto>();
+            var service = new UserService(userRepository, _mapper);
+            //Act
+
+            var result = await service.UpdateUser(userDto.Object);
+            //Assert
+            Assert.True(result);
+        }
+
+        [Fact]
+        public async Task DeleteUser_WhenRequestIsOk_Successfull()
+        {
+            //Arrange
+            IUserRepository userRepository = new MockUserRepository();
+
+            var userDto = new Mock<UserDto>();
+            var service = new UserService(userRepository, _mapper);
+            //Act
+
+            var result = await service.DeleteUser(userDto.Object.Id);
+            //Assert
+            Assert.True(result);
+        }
+
     }
      
 }

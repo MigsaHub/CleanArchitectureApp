@@ -11,5 +11,19 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
             return Task.FromResult(true);
         }
 
+        public Task<bool> DeleteUser(int userId)
+        {
+            return Task.FromResult(true);
+        }
+
+        public Task<User> GetUserById(int userId)
+        {
+            return Task.FromResult(new User());
+        }
+
+        public Task<bool> UpdateUser(User user)
+        {
+            return Task.FromResult(true);
+        }
     }
 }
