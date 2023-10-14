@@ -13,14 +13,7 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
                 Observation = "",
                 Temporary = false,
                 URL = "",
-                User = new User()
-                {
-                    Id = 1,
-                    Email = "random@test.com",
-                    Name = "Test",
-                    PasswordHash =  new byte[0]
-                    }
-                },
+                User = 3 },
             new Property {
                 Id = 2,
                 Area = "Chacarita",
@@ -29,14 +22,7 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
                 Observation = "",
                 Temporary = true,
                 URL = "",
-                User = new User()
-                {
-                    Id = 2,
-                    Email = "random@test.com",
-                    Name = "Test",
-                    PasswordHash = new byte[0]
-                    }
-                },
+                User = 1 },
             new Property {
                 Id = 3,
                 Area = "Villa Urquiza",
@@ -45,14 +31,8 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
                 Observation = "",
                 Temporary = false,
                 URL = "",
-                User = new User()
-                {
-                    Id = 3,
-                    Email = "random@test.com",
-                    Name = "Test",
-                    PasswordHash =  new byte[0]
-                    }
-                }
+                User = 2 
+            }
         };
     }
 }

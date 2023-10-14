@@ -25,7 +25,7 @@ namespace CleanArchitectureApp.Controllers
         [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<User>> Register(UserDto userDto)
+        public async Task<IActionResult> Register(UserDto userDto)
         { 
             try
             {
@@ -43,7 +43,7 @@ namespace CleanArchitectureApp.Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<string>> Login(UserDto userDto)
+        public async Task<IActionResult> Login(UserDto userDto)
         {
             try
             {
@@ -61,11 +61,18 @@ namespace CleanArchitectureApp.Controllers
         [HttpGet("GetUserById")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<UserDto>> GetUser(int userId)
+        [ProducesResponseType(StatusCodes.Status404NotFound, Type = typeof(string))]
+        public async Task<IActionResult> GetUser(int userId)
         {
             try
             {
                 var result = await _userService.GetUser(userId);
+
+                if(result == null)
+                {
+                    return NotFound();
+                }
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -79,7 +86,7 @@ namespace CleanArchitectureApp.Controllers
         [HttpPut("UpdateUser")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<bool>> UpdateUser(UserDto user)
+        public async Task<IActionResult> UpdateUser(UserDto user)
         {
             try
             {
@@ -97,7 +104,7 @@ namespace CleanArchitectureApp.Controllers
         [HttpDelete("DeleteUserById")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
-        public async Task<ActionResult<bool>> DeleteUserById(int userId)
+        public async Task<IActionResult> DeleteUserById(int userId)
         {
             try
             {

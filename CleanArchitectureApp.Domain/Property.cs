@@ -13,6 +13,6 @@ namespace CleanArchitectureApp.Domain
         public bool Temporary { get; set; } = false; 
         public string URL { get; set; } = string.Empty;
         public string Observation { get; set; } = string.Empty;
-        public User User { get; set; } = new User();
+        public int User { get; set; }
     }
 }

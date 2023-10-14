@@ -16,4 +16,8 @@
     <ProjectReference Include="..\CleanArchitectureApp.Domain\CleanArchitectureApp.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repository\Impl\" />
+  </ItemGroup>
+
 </Project>
