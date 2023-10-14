@@ -34,12 +34,9 @@ First, I created a NetCore Web API application and defined Clean Architecture la
   
   	About design patterns I worked with Singleton Pattern, to defined a unique instance of Database with DapperContext. 
 
-You can run with docker locally with this commands:
-
-	docker build --no-cache -t cleanarchitectureapp -f CleanArchitectureApp/Dockerfile .
-
-	docker run --name cleanarchitectureapp -p 32788:80 cleanarchitectureapp
-
+You can run with docker locally with this command:
+     
+     docker-compose up --build -d
 # Endpoints
 
 
