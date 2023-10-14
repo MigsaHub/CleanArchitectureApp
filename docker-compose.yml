@@ -1,0 +1,17 @@
+version: '3.4'
+
+services:
+  cleanarchitectureapp:
+    image: ${DOCKER_REGISTRY-}cleanarchitectureapp
+    build:
+      context: .
+      dockerfile: CleanArchitectureApp/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80 
+    ports:
+      - "32782:80"
+      - "32774:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
