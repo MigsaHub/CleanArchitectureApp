@@ -70,7 +70,6 @@ namespace CleanArchitectureApp.Infrastructure.Repository
                 URL=@URL,
                 Observation=@Observation,
                 User=@User
-                )
                 WHERE Id = @Id
             """;
             var result = await connection.ExecuteAsync(sql, property);

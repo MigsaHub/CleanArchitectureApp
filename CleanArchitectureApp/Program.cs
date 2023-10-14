@@ -53,6 +53,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 var mapperConfig = new MapperConfiguration(cfg =>
 {
     cfg.AddProfile(new UserProfile());
+    cfg.AddProfile(new PropertyProfile());
 });
 
 

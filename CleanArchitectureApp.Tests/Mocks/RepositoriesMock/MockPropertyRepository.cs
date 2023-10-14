@@ -11,7 +11,7 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
                 Price = 250,
                 Status = "New",
                 Observation = "",
-                Temporary = false,
+                Temporary = 0,
                 URL = "",
                 User = 3 },
             new Property {
@@ -20,7 +20,7 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
                 Price = 500,
                 Status = "Closed",
                 Observation = "",
-                Temporary = true,
+                Temporary = 1,
                 URL = "",
                 User = 1 },
             new Property {
@@ -29,7 +29,7 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
                 Price = 12000,
                 Status = "New",
                 Observation = "",
-                Temporary = false,
+                Temporary = 0,
                 URL = "",
                 User = 2 
             }

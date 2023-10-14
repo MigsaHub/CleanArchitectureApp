@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitectureApp.Application.DTO;
 using CleanArchitectureApp.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CleanArchitectureApp.Application.Mappers
 {
@@ -14,9 +9,11 @@ namespace CleanArchitectureApp.Application.Mappers
         public PropertyProfile()
         {
             CreateMap<Property, PropertyDto>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User));
+                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.User))
+                .ForMember(dest => dest.Temporary, opt => opt.MapFrom(src => src.Temporary==1));
             CreateMap<PropertyDto, Property>()
-                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.UserId));
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Temporary, opt => opt.MapFrom(src => src.Temporary?1:0));
         }
     }
 }
