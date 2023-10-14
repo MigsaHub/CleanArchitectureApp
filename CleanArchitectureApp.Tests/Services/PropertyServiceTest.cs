@@ -1,6 +1,6 @@
 ﻿namespace CleanArchitectureApp.Tests.Services
 {
-    public class TestPropertyService
+    public class PropertyServiceTest
     {
 
         [Fact]

@@ -9,7 +9,8 @@ namespace CleanArchitectureApp.Application.Mappers
         public UserProfile()
         {
 
-            CreateMap<User, UserDto>();
+            CreateMap<User, UserDto>()
+                           .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.PasswordHash.ToString()));
             CreateMap<UserDto, User>();
         }
     }

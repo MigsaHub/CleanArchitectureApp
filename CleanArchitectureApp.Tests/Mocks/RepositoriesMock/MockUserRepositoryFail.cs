@@ -10,19 +10,18 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
             throw new Exception();
         }
 
-        public Task<bool> DeleteUser(int userId)
+        public Task<bool> DeleteUser(string emailUser)
         {
             throw new Exception();
-        }
-
-        public Task<User> GetUserById(int userId)
+        } 
+        public Task<User> GetUserByMail(string emailUser)
         {
-            throw new Exception();
+          throw new Exception(); 
         }
 
         public Task<bool> UpdateUser(User user)
         {
-            throw new Exception();
-        }
+        throw new Exception();
+       }
     }
 }

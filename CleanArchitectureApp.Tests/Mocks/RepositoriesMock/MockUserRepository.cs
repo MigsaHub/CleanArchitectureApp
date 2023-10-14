@@ -11,12 +11,12 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
             return Task.FromResult(true);
         }
 
-        public Task<bool> DeleteUser(int userId)
+        public Task<bool> DeleteUser(string emailUser)
         {
             return Task.FromResult(true);
         }
 
-        public Task<User> GetUserById(int userId)
+        public Task<User> GetUserByMail(string emailUser)
         {
             return Task.FromResult(new User());
         }

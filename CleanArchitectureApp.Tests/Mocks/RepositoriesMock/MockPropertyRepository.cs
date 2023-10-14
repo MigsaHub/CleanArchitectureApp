@@ -1,8 +1,8 @@
 ﻿using CleanArchitectureApp.Domain;
 
-namespace CleanArchitectureApp.Tests.Mocks.Helpers
+namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
 {
-    public static class PropertyFixture
+    public static class MockPropertyRepository
     {
         public static List<Property> GetTestProperties() => new() {
             new Property {
@@ -18,7 +18,7 @@ namespace CleanArchitectureApp.Tests.Mocks.Helpers
                     Id = 1,
                     Email = "random@test.com",
                     Name = "Test",
-                    Password = "Test"
+                    PasswordHash =  new byte[0]
                     }
                 },
             new Property {
@@ -34,7 +34,7 @@ namespace CleanArchitectureApp.Tests.Mocks.Helpers
                     Id = 2,
                     Email = "random@test.com",
                     Name = "Test",
-                    Password = "Test"
+                    PasswordHash = new byte[0]
                     }
                 },
             new Property {
@@ -50,7 +50,7 @@ namespace CleanArchitectureApp.Tests.Mocks.Helpers
                     Id = 3,
                     Email = "random@test.com",
                     Name = "Test",
-                    Password = "Test"
+                    PasswordHash =  new byte[0]
                     }
                 }
         };

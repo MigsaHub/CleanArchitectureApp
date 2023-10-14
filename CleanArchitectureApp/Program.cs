@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using CleanArchitectureApp.Infrastructure.Context;
 using CleanArchitectureApp.Application.Services;
 using CleanArchitectureApp.Application.Services.Impl;
 using CleanArchitectureApp.Infrastructure.Repository;
@@ -12,6 +13,8 @@ using CleanArchitectureApp.Application.Mappers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSingleton<DapperContext>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

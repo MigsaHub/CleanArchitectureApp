@@ -6,8 +6,8 @@ namespace CleanArchitectureApp.Application.Services
         Task<bool> Register(UserDto userDto);
         Task<string> Login(UserDto userDto);
         Task<bool> UpdateUser(UserDto userDto);
-        Task<bool> DeleteUser(int userId);
-        Task<UserDto> GetUser(int userId);
+        Task<bool> DeleteUser(string email);
+        Task<UserDto> GetUser(string email);
 
     }
 }

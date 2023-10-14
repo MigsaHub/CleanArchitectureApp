@@ -23,12 +23,12 @@ namespace CleanArchitectureApp.Application.Services.Impl
             _mapper = mapper;
             _configuration = configuration;
         }
-        public async Task<UserDto> GetUser(int userId)
+        public async Task<UserDto> GetUser(string email)
         {
             try
             {
-                var result = await _userRepository.GetUserById(userId);
-                var userDto = _mapper.Map<UserDto>(result);
+                var result = await _userRepository.GetUserByMail(email);
+                var userDto = _mapper.Map<UserDto>(result); 
                 return userDto;
             }
             catch (Exception ex)
@@ -36,11 +36,11 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 throw new UserServiceException(ex.Message, ex.InnerException);
             }
         }
-        public async Task<bool> DeleteUser(int userId)
+        public async Task<bool> DeleteUser(string email)
         {
             try
             {
-                var result = await _userRepository.DeleteUser(userId);
+                var result = await _userRepository.DeleteUser(email);
                 return result; 
             }
             catch (Exception ex)
@@ -53,14 +53,14 @@ namespace CleanArchitectureApp.Application.Services.Impl
         {
             try
             {
-                var result = await _userRepository.GetUserById(userDto.Id);
+                var result = await _userRepository.GetUserByMail(userDto.Email);
                 if (result == null)
                 {
                     throw new UserServiceException("User doesn't exist, verify your credentials");
                 }
                 else
                 {
-                    if (!Decrypt(userDto.Password, null, null))
+                    if (!Decrypt(userDto.Password, result.PasswordHash, result.PasswordSalt))
                     {
                         throw new UserServiceException("Password Incorrect");
                     }
@@ -76,14 +76,14 @@ namespace CleanArchitectureApp.Application.Services.Impl
             }
         }
 
-
         public async Task<bool> Register(UserDto userDto)
         {
             try
             {
                 Encrypt(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
                 var user = _mapper.Map<User>(userDto);
-                user.Password = passwordHash.ToString()!;
+                user.PasswordHash = passwordHash;
+                user.PasswordSalt = passwordSalt;
 
                 var result = await _userRepository.AddUser(user);
                 return result;
@@ -97,11 +97,23 @@ namespace CleanArchitectureApp.Application.Services.Impl
         public async Task<bool> UpdateUser(UserDto userDto)
         {
             try
-            {
-                //pending verify if user exist
-                var user = _mapper.Map<User>(userDto);
-                var result = await _userRepository.UpdateUser(user);
-                return result;
+            {  //CHECK
+                var userById = await _userRepository.GetUserByMail(userDto.Email);
+                if (userById == null)
+                {
+                    throw new UserServiceException("User doesn't exist, verify your credentials");
+                }
+                else 
+                {
+                    Encrypt(userDto.Password, out byte[] passwordHash, out byte[] passwordSalt);
+                    var user = _mapper.Map<User>(userDto);
+                    user.Id = userById.Id;
+                    user.PasswordHash = passwordHash;
+                    user.PasswordSalt = passwordSalt;
+
+                    var result = await _userRepository.UpdateUser(user);
+                    return result;
+                } 
             }
             catch (Exception ex)
             {
@@ -145,6 +157,16 @@ namespace CleanArchitectureApp.Application.Services.Impl
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
+        }
+
+        public Task<bool> DeleteUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserDto> GetUser(int userId)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

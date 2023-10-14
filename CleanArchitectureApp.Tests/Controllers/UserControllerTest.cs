@@ -78,7 +78,7 @@ namespace CleanArchitectureApp.Tests.Controllers
             var service = new UserService(userRepository, _mapper, _configuration);
             //Act
 
-            var result = await service.GetUser(userDto.Object.Id);
+            var result = await service.GetUser(userDto.Object.Email);
             //Assert
             Assert.IsType<UserDto>(result);
         }
@@ -108,7 +108,7 @@ namespace CleanArchitectureApp.Tests.Controllers
             var service = new UserService(userRepository, _mapper, _configuration);
             //Act
 
-            var result = await service.DeleteUser(userDto.Object.Id);
+            var result = await service.DeleteUser(userDto.Object.Email);
             //Assert
             Assert.True(result);
         }

@@ -8,6 +8,8 @@ namespace CleanArchitectureApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     [Authorize]
     public class UserController : ControllerBase
     {
@@ -33,12 +35,12 @@ namespace CleanArchitectureApp.Controllers
 
         }
 
-        [HttpGet("GetUserById")]
-        public async Task<ActionResult<bool>> GetUser(int userId)
+        [HttpGet("GetUserByEmail")]
+        public async Task<ActionResult<UserDto>> GetUser(string email)
         {
             try
             {
-                var result = await _userService.GetUser(userId);
+                var result = await _userService.GetUser(email);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -47,6 +49,7 @@ namespace CleanArchitectureApp.Controllers
             }
 
         }
+        
         [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<ActionResult<string>> Login(UserDto userDto)
@@ -63,12 +66,12 @@ namespace CleanArchitectureApp.Controllers
 
         }
 
-        [HttpPost("DeleteUserById")]
-        public async Task<ActionResult<bool>> DeleteUserById(int userId)
+        [HttpPost("DeleteUserByEmail")]
+        public async Task<ActionResult<bool>> DeleteUserByEmail(string email)
         {
             try
             {
-                var result = await _userService.DeleteUser(userId);
+                var result = await _userService.DeleteUser(email);
                 return Ok(result);
             }
             catch (Exception ex)
