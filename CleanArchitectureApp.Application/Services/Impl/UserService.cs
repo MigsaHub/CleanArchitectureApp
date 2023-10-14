@@ -56,7 +56,7 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 var result = await _userRepository.GetUserById(userDto.Id);
                 if (result == null)
                 {
-                    throw new UserServiceException("User doesnt exist, verify your credentials");
+                    throw new UserServiceException("User doesn't exist, verify your credentials");
                 }
                 else
                 {
@@ -85,9 +85,6 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 var user = _mapper.Map<User>(userDto);
                 user.Password = passwordHash.ToString()!;
 
-                ////user.PasswordHash = passwordHash;
-                ////user.PasswordSalt = passwordSalt;
-         
                 var result = await _userRepository.AddUser(user);
                 return result;
             }

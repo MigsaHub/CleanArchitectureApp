@@ -1,13 +1,13 @@
-using CleanArchitectureApp.Application.Services.Impl;
-using CleanArchitectureApp.Application.Services;
-using CleanArchitectureApp.Infrastructure.Repository; 
-using CleanArchitectureApp.Application.Mappers;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using CleanArchitectureApp.Application.Services;
+using CleanArchitectureApp.Application.Services.Impl;
+using CleanArchitectureApp.Infrastructure.Repository;
+using CleanArchitectureApp.Application.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,11 +26,13 @@ builder.Services.AddSwaggerGen(options =>
         Type = SecuritySchemeType.ApiKey
     });
 
-    options.OperationFilter<SecurityRequirementsOperationFilter>(); //Matt Frear
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<IPropertyService, PropertyService>();
+
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -44,6 +46,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = false
         };
     });
+
 
 var mapperConfig = new MapperConfiguration(cfg =>
 {

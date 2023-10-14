@@ -112,7 +112,5 @@ namespace CleanArchitectureApp.Tests.Controllers
             //Assert
             Assert.True(result);
         }
-
     }
-     
 }
