@@ -32,6 +32,76 @@ namespace CleanArchitectureApp.Tests.Controllers
             //Assert
             result.StatusCode.Should().Be(200);
         }
+        [Fact]
+        public async Task GetUser_OnSuccessReturnsStatusCode200()
+        {
+            //Arrange 
+            var userDtoModel = new Mock<UserDto>();
+            _userServiceMock
+                .Setup(service => service.GetUser(It.IsAny<int>())).ReturnsAsync(new Domain.User() { Id=1});
+
+            var sut = new UserController(_userServiceMock.Object);
+
+            //Act
+            var result = (OkObjectResult)await sut.GetUser(1);
+
+            //Assert
+            result.StatusCode.Should().Be(200);
+        }
+        [Fact]
+        public async Task Login_OnSuccessReturnsStatusCode200()
+        {
+            //Arrange 
+            var userDtoModel = new Mock<UserDto>();
+            _userServiceMock
+                .Setup(service => service.Login(It.IsAny<UserDto>())).ReturnsAsync(string.Empty);
+
+            var sut = new UserController(_userServiceMock.Object);
+
+            //Act
+            var result = (OkObjectResult)await sut.Login(userDtoModel.Object);
+
+            //Assert
+            result.StatusCode.Should().Be(200);
+        }
+
+        [Fact]
+        public async Task UpdateUser_OnSuccessReturnsStatusCode200()
+        {
+            //Arrange 
+            var userDtoModel = new Mock<UserDto>();
+            _userServiceMock
+                .Setup(service => service.UpdateUser(It.IsAny<UserDto>())).ReturnsAsync(true);
+
+            var sut = new UserController(_userServiceMock.Object);
+
+            //Act
+            var result = (OkObjectResult)await sut.UpdateUser(userDtoModel.Object);
+
+            //Assert
+            result.StatusCode.Should().Be(200);
+        }
+
+        [Fact]
+        public async Task DeleteUser_OnSuccessReturnsStatusCode200()
+        {
+            //Arrange 
+            var userDtoModel = new Mock<UserDto>();
+            _userServiceMock
+                .Setup(service => service.DeleteUser(It.IsAny<int>())).ReturnsAsync(true);
+            _userServiceMock
+                .Setup(service => service.GetUser(It.IsAny<int>())).ReturnsAsync(new Domain.User() { Id=1});
+                
+
+            var sut = new UserController(_userServiceMock.Object);
+
+            //Act
+            var result = (OkObjectResult)await sut.DeleteUserById(1);
+
+            //Assert
+            result.StatusCode.Should().Be(200);
+        }
+
 
     }
 }
