@@ -24,18 +24,7 @@ namespace CleanArchitectureApp.Tests.Services
 
             _mapper = new Mapper(mapperConfig);
         }
-
-        [Fact]
-        public async Task GetAllProperties_WhenCalled_ReturnsListOfUsers()
-        {
-            //Arrange
-            var expectedResponse = new List<string>();
-  
-            //Act
-
-            //Assert
-        }
-
+ 
         [Fact]
         public async Task CreateNewPropertyApplication_OnSuccessReturnsStatusCode200()
         {
