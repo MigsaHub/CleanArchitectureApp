@@ -9,7 +9,7 @@ namespace CleanArchitectureApp.Tests.Mocks.ServicesMocks
         internal static Mock<IUserService> GetIUserServiceMock()
         {
             var serviceMock = new Mock<IUserService>();
-            serviceMock.Setup(s => s.Register(It.IsAny<UserDto>())).ReturnsAsync(true);
+            serviceMock.Setup(s => s.Register(It.IsAny<UserDto>())).ReturnsAsync(new Domain.User());
 
             return serviceMock;
         }

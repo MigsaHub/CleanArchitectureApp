@@ -14,36 +14,49 @@ namespace CleanArchitectureApp.Infrastructure.Repository
         }
 
 
-        public async Task<bool> AddUser(User user)
+        public async Task<int> AddUser(User user)
         {
             using var connection = _context.CreateConnection();
-            var sql = """
+            var sql = @"
             INSERT INTO User (Name,Email,PasswordHash,PasswordSalt)
-            VALUES (@Name, @Email, @PasswordHash, @PasswordSalt)
-            """;
-            var result= await connection.ExecuteAsync(sql, user);
-            return (result > 0);
+            VALUES (@Name, @Email, @PasswordHash, @PasswordSalt);
+            SELECT LAST_INSERT_ROWID();
+            ";
+
+            int result = await connection.QuerySingleAsync<int>(sql, user);
+            return (result);
         }
 
-        public async Task<bool> DeleteUser(string emailUser)
+        public async Task<bool> DeleteUser(int userId)
         {
             using var connection = _context.CreateConnection();
             var sql = """
-            DELETE FROM User where Email = @emailUser
+            DELETE FROM User where Id = @userId
             """;
-            var result = await connection.ExecuteAsync(sql, new { emailUser });
+            var result = await connection.ExecuteAsync(sql, new { userId });
             return (result > 0);
         }
 
-        public async Task<User> GetUserByMail(string emailUser)
+        public async Task<User> GetUserByEmail(string email)
+        {
+            using var connection = _context.CreateConnection();
+            var sql = """
+            SELECT * FROM User
+            WHERE Email = @email
+            """;
+            var user = await connection.QuerySingleOrDefaultAsync<User>(sql, new { email });
+            return user!;
+        }
+
+        public async Task<User> GetUserById(int userId)
         {
 
             using var connection = _context.CreateConnection();
             var sql = """
             SELECT * FROM User
-            WHERE Email = @emailUser
+            WHERE Id = @userId
             """;
-            var user = await connection.QuerySingleOrDefaultAsync<User>(sql, new { emailUser });
+            var user = await connection.QuerySingleOrDefaultAsync<User>(sql, new { userId });
             return user!;
          
         }

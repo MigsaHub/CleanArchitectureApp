@@ -1,6 +1,7 @@
 ﻿using CleanArchitectureApp.Application.DTO;
 using CleanArchitectureApp.Application.Exceptions;
 using CleanArchitectureApp.Application.Services;
+using CleanArchitectureApp.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,12 @@ namespace CleanArchitectureApp.Controllers
         {
            _userService = userService;
         }
+      
         [AllowAnonymous]
         [HttpPost("Register")]
-        public async Task<ActionResult<bool>> Register(UserDto userDto)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public async Task<ActionResult<User>> Register(UserDto userDto)
         { 
             try
             {
@@ -34,24 +38,11 @@ namespace CleanArchitectureApp.Controllers
             } 
 
         }
-
-        [HttpGet("GetUserByEmail")]
-        public async Task<ActionResult<UserDto>> GetUser(string email)
-        {
-            try
-            {
-                var result = await _userService.GetUser(email);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new UserServiceException(ex.Message, ex.InnerException!));
-            }
-
-        }
-        
-        [AllowAnonymous]
+      
         [HttpPost("Login")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         public async Task<ActionResult<string>> Login(UserDto userDto)
         {
             try
@@ -66,12 +57,15 @@ namespace CleanArchitectureApp.Controllers
 
         }
 
-        [HttpPost("DeleteUserByEmail")]
-        public async Task<ActionResult<bool>> DeleteUserByEmail(string email)
+       
+        [HttpGet("GetUserById")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public async Task<ActionResult<UserDto>> GetUser(int userId)
         {
             try
             {
-                var result = await _userService.DeleteUser(email);
+                var result = await _userService.GetUser(userId);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -81,8 +75,11 @@ namespace CleanArchitectureApp.Controllers
 
         }
 
+      
         [HttpPut("UpdateUser")]
-        public async Task<ActionResult<bool>> UpdateUserById(UserDto user)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public async Task<ActionResult<bool>> UpdateUser(UserDto user)
         {
             try
             {
@@ -95,5 +92,25 @@ namespace CleanArchitectureApp.Controllers
             }
 
         }
+
+       
+        [HttpDelete("DeleteUserById")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
+        public async Task<ActionResult<bool>> DeleteUserById(int userId)
+        {
+            try
+            {
+                var result = await _userService.DeleteUser(userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new UserServiceException(ex.Message, ex.InnerException!));
+            }
+
+        }
+
+       
     }
 }

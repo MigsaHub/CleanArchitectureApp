@@ -1,13 +1,14 @@
-﻿using CleanArchitectureApp.Application.DTO; 
+﻿using CleanArchitectureApp.Application.DTO;
+using CleanArchitectureApp.Domain;
 
 namespace CleanArchitectureApp.Application.Services
 {
     public interface IUserService { 
-        Task<bool> Register(UserDto userDto);
+        Task<User> Register(UserDto userDto);
         Task<string> Login(UserDto userDto);
         Task<bool> UpdateUser(UserDto userDto);
-        Task<bool> DeleteUser(string email);
-        Task<UserDto> GetUser(string email);
+        Task<bool> DeleteUser(int userId);
+        Task<User> GetUser(int userId);
 
     }
 }

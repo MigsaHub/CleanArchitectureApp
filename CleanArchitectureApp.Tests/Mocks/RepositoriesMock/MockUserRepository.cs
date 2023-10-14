@@ -6,17 +6,22 @@ namespace CleanArchitectureApp.Tests.Mocks.RepositoriesMock
 
     public class MockUserRepository : IUserRepository
     {
-        public Task<bool> AddUser(User user)
+        public Task<int> AddUser(User user)
+        {
+            return Task.FromResult(0);
+        }
+
+        public Task<bool> DeleteUser(int userId)
         {
             return Task.FromResult(true);
         }
 
-        public Task<bool> DeleteUser(string emailUser)
+        public Task<User> GetUserByEmail(string email)
         {
-            return Task.FromResult(true);
+            return Task.FromResult(new User());
         }
 
-        public Task<User> GetUserByMail(string emailUser)
+        public Task<User> GetUserById(int userId)
         {
             return Task.FromResult(new User());
         }

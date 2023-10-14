@@ -23,24 +23,23 @@ namespace CleanArchitectureApp.Application.Services.Impl
             _mapper = mapper;
             _configuration = configuration;
         }
-        public async Task<UserDto> GetUser(string email)
+        public async Task<User> GetUser(int userId)
         {
             try
             {
-                var result = await _userRepository.GetUserByMail(email);
-                var userDto = _mapper.Map<UserDto>(result); 
-                return userDto;
+                var result = await _userRepository.GetUserById(userId); 
+                return result;
             }
             catch (Exception ex)
             {
                 throw new UserServiceException(ex.Message, ex.InnerException);
             }
         }
-        public async Task<bool> DeleteUser(string email)
+        public async Task<bool> DeleteUser(int userId)
         {
             try
             {
-                var result = await _userRepository.DeleteUser(email);
+                var result = await _userRepository.DeleteUser(userId);
                 return result; 
             }
             catch (Exception ex)
@@ -48,12 +47,11 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 throw new UserServiceException(ex.Message, ex.InnerException);
             }
         }
-
         public async Task<string> Login(UserDto userDto)
         {
             try
             {
-                var result = await _userRepository.GetUserByMail(userDto.Email);
+                var result = await _userRepository.GetUserByEmail(userDto.Email);
                 if (result == null)
                 {
                     throw new UserServiceException("User doesn't exist, verify your credentials");
@@ -75,8 +73,7 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 throw new UserServiceException(ex.Message, ex.InnerException);
             }
         }
-
-        public async Task<bool> Register(UserDto userDto)
+        public async Task<User> Register(UserDto userDto)
         {
             try
             {
@@ -85,7 +82,9 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 user.PasswordHash = passwordHash;
                 user.PasswordSalt = passwordSalt;
 
-                var result = await _userRepository.AddUser(user);
+                var record= await _userRepository.AddUser(user); 
+                var result = await _userRepository.GetUserById(record);
+                
                 return result;
             }
             catch (Exception ex)
@@ -93,12 +92,11 @@ namespace CleanArchitectureApp.Application.Services.Impl
                 throw new UserServiceException(ex.Message,ex.InnerException);
             }
         }
-
         public async Task<bool> UpdateUser(UserDto userDto)
         {
             try
-            {  //CHECK
-                var userById = await _userRepository.GetUserByMail(userDto.Email);
+            {  
+                var userById = await _userRepository.GetUserByEmail(userDto.Email);
                 if (userById == null)
                 {
                     throw new UserServiceException("User doesn't exist, verify your credentials");
@@ -157,16 +155,6 @@ namespace CleanArchitectureApp.Application.Services.Impl
 
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
             return jwt;
-        }
-
-        public Task<bool> DeleteUser(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<UserDto> GetUser(int userId)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
