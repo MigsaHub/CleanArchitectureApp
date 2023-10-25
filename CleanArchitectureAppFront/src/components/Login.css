@@ -1,0 +1,23 @@
+.wrapper {
+  height: 100vh;
+}
+
+.login {
+  width: 300px;
+  height: min-content;
+  border-radius: 5px;
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+
+.SignUp {
+  padding-left: 10px;
+  color: #797979;
+  font-size: 15px;
+}
+
+.gray {
+  background-color: gray;
+  color: gray;
+}
