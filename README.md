@@ -26,9 +26,7 @@ First, I created a NetCore Web API application and defined Clean Architecture la
   
   	I had to do some refactoring when the business logic was developed, I had to adapt the unit tests, I had to clean up unused references.
   
-  	I left the frontend and the end because was optional but a great option to expose methods consumption with React, is located in this repository:
-
-       https://github.com/MigsaHub/CleanArchitectureAppFront.git
+  	I left the frontend and the end because was optional but a great option to expose methods consumption with React. Update: CleanArchitectureAppFront is in this github proyect.
   
   	About refactoring and development, I focused on the SOLID principles for good practices. Work and delegated responsability to contracts(repositories and services interfaces) and implemented to develop internal logic (Open-Closed, Dependency inversion, Liskov Sustitution principle to define that only high level defined contracts and controllers and implementations work with that also Single Responsability to delegated methods. 
   
@@ -37,8 +35,13 @@ First, I created a NetCore Web API application and defined Clean Architecture la
 You can run with docker locally with this command:
      
      docker-compose up --build -d
-# Endpoints
 
+You could access front and back with this ports:
+     
+     https://localhost:32774/swagger/index.html (Backend)
+     http://localhost:5173/ (Front)
+# Endpoints
+![image](https://github.com/MigsaHub/CleanArchitectureApp/assets/77845203/2c50e140-8e31-41f1-a7df-1e8b9b8f8e6a)
 
 # Technologies Used:
 
